@@ -19,7 +19,7 @@ module "eks" {
     }
   }
 
-  cluster_endpoint_public_access = true
+        cluster_endpoint_public_access = true
 
   # Enable cluster creator admin permissions and access entries
   enable_cluster_creator_admin_permissions = true
