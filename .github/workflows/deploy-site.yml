@@ -1,0 +1,30 @@
+name: deploy-site
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**"]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  sync-and-restart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: sync site content to S3
+        run: aws s3 sync site/ "s3://${{ vars.SITE_BUCKET }}/" --delete
+
+      - name: update kubeconfig
+        run: aws eks update-kubeconfig --name eks-lab --region us-east-1
+
+      - name: restart deployment
+        run: kubectl rollout restart deployment/nginx-site

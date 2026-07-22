@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-site
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-site
+  template:
+    metadata:
+      labels:
+        app: nginx-site
+    spec:
+      serviceAccountName: nginx-site
+      volumes:
+        - name: site-content
+          emptyDir: {}
+      initContainers:
+        - name: fetch-content
+          image: amazon/aws-cli:2.17.62
+          command: ["aws", "s3", "sync", "s3://eks-lab-site-hulletm/", "/site"]
+          env:
+            - name: AWS_DEFAULT_REGION
+              value: us-east-1
+          volumeMounts:
+            - name: site-content
+              mountPath: /site
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: site-content
+              mountPath: /usr/share/nginx/html
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
