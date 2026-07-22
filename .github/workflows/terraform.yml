@@ -40,4 +40,5 @@ jobs:
 
       - name: terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var="site_bucket_name=eks-lab-site-hullet"
+      
