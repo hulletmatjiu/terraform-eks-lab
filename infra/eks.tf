@@ -23,5 +23,5 @@ module "eks" {
 
   # Enable cluster creator admin permissions and access entries
   enable_cluster_creator_admin_permissions = true
-  
+
 }

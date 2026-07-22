@@ -19,8 +19,8 @@ resource "aws_iam_policy" "nginx_site_s3_read" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["s3:GetObject", "s3:ListBucket"]
+        Effect = "Allow"
+        Action = ["s3:GetObject", "s3:ListBucket"]
         Resource = [
           aws_s3_bucket.site_content.arn,
           "${aws_s3_bucket.site_content.arn}/*"

@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "github_actions_trust" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:hulletmatjiu/terraform-eks-lab:*"]
+      values   = ["repo:hulletmatjiu@48725561/terraform-eks-lab@1308250586:*"]
     }
   }
 }
