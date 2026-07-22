@@ -9,3 +9,7 @@ variable "cluster_name" {
 variable "site_bucket_name" {
   description = "Globally unique bucket name for the site content, e.g. eks-lab-site-yourname"
 }
+
+variable "location-test"{
+default = "Pretoria"
+}
