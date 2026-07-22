@@ -32,5 +32,5 @@ resource "aws_iam_policy" "nginx_site_s3_read" {
 
 resource "aws_iam_role_policy_attachment" "nginx_site_s3_read" {
   role       = module.nginx_site_irsa.iam_role_name
-        policy_arn = aws_iam_policy.nginx_site_s3_read.arn
+         policy_arn = aws_iam_policy.nginx_site_s3_read.arn
 }
